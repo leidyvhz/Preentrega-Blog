@@ -8,17 +8,6 @@ El programa presenta un menú interactivo en la consola con las siguientes funci
 5. Salir: Finaliza la ejecución de la aplicación.
 
 El proyecto se encuentra organizado modularmente en un paquete interno llamado blog.
-blog_consola/
-│
-├── blog/                      # Paquete principal con la lógica interna
-│   ├── __init__.py            # Define el directorio como un paquete Python
-│   ├── datos.py               # Contiene los datos estáticos (posts, autores, estados)
-│   ├── menu.py                # Contiene la interfaz del menú de opciones
-│   ├── operaciones.py         # Lógica para listar, buscar y filtrar publicaciones
-│   └── validaciones.py        # Funciones de validación de estructura de los posts
-│
-├── main.py                    # Punto de entrada principal para ejecutar la aplicación
-└── readme.md                  # Documentación del proyecto
 
 Responsabilidad de cada módulo
 * main.py: Es el punto de entrada y orquestador del sistema. Importa las funciones y datos de los módulos internos, controla el flujo principal con un ciclo interactivo y ejecuta la opción seleccionada por el usuario.
