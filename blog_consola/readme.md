@@ -1,19 +1,36 @@
-Este proyecto es una aplicación interactiva en consola desarrollada en Python que permite gestionar, consultar y validar las publicaciones (posts) de un blog. Fue estructurado utilizando paquetes y módulos para aplicar buenas prácticas de organización de código.
+# Aplicación de Consola - Blog en Python (POO y JSON)
 
-El programa presenta un menú interactivo en la consola con las siguientes funcionalidades:
-1. Ver todos los posts: Muestra la lista de títulos disponibles y sus respectivos autores.
-2. Buscar por título: Realiza búsquedas de publicaciones según una palabra clave ingresada por el usuario.
-3. Filtrar por tag: Permite filtrar las publicaciones asociadas a una etiqueta o tema específico (ej. Python, SQL).
-4. Validar posts: Inspecciona cada publicación para verificar la integridad de su estructura y comprobar si cumple con todas las reglas requeridas (existencia de claves obligatorias, formato de autor, etiquetas y estados válidos).
-5. Salir: Finaliza la ejecución de la aplicación.
+Este proyecto es una aplicación interactiva en consola desarrollada en Python que permite gestionar, consultar, validar y persistir las publicaciones (posts) de un blog. Está estructurado aplicando los principios de **Programación Orientada a Objetos (POO)** y buenas prácticas de organización mediante paquetes y módulos.
 
-El proyecto se encuentra organizado modularmente en un paquete interno llamado blog.
+## Estructura del Proyecto
 
-Responsabilidad de cada módulo
-* main.py: Es el punto de entrada y orquestador del sistema. Importa las funciones y datos de los módulos internos, controla el flujo principal con un ciclo interactivo y ejecuta la opción seleccionada por el usuario.
-* blog/datos.py: Actúa como la fuente de información o base de datos simulada. Define los datos de perfil, estados permitidos, conjuntos de etiquetas y la lista general de publicaciones (posts).
-* blog/menu.py: Gestiona la interacción con el usuario en pantalla. Muestra el menú de opciones y captura la entrada del teclado con control de errores numéricos.
-* blog/operaciones.py: Contiene la lógica de negocio para la búsqueda y filtrado de publicaciones (listar_posts, buscar_por_titulo, filtrar_por_tag).
-* blog/validaciones.py: Encargado del control de calidad e integridad de los datos (validar_post). Verifica que las publicaciones contengan los campos obligatorios y los tipos de datos correctos.
+El proyecto se encuentra organizado modularmente en el paquete interno `blog/`:
 
-El archivo que se debe ejecutar para iniciar el sistema es main.py.
+* **`main.py`**: Punto de entrada y orquestador del sistema. Controla el flujo principal con un ciclo interactivo y ejecuta las opciones seleccionadas por el usuario.
+* **`blog/modelos.py`**: Define las clases del dominio (`Autor`, `Post` y `Blog`), incluyendo sus métodos de negocio (listar, buscar, filtrar) y los métodos de serialización/deserialización para trabajar con diccionarios.
+* **`blog/datos.py`**: Encargado de la gestión de datos, conexión con el archivo persistente (`posts.json`) usando rutas absolutas seguras, y carga de datos iniciales.
+* **`blog/menu.py`**: Gestiona la interacción visual con el usuario en la consola y captura las opciones del menú principal.
+* **`blog/operaciones.py`** *(si aplica)*: Funciones de apoyo secundarias para las operaciones del sistema.
+* **`blog/validaciones.py`**: Control de calidad e integridad de los datos, verificando instancias y atributos obligatorios de los posts.
+* **`blog/posts.json`**: Archivo local en formato JSON donde se almacenan de manera persistente los posts.
+
+---
+
+## Funcionalidades del Menú Interactivo
+
+1. **Ver todos los posts**: Muestra el identificador, título, autor y estado actual de cada publicación cargada en el blog.
+2. **Buscar por título**: Realiza búsquedas de publicaciones según una palabra clave ingresada por el usuario (insensible a mayúsculas/minúsculas).
+3. **Filtrar por tag**: Permite filtrar las publicaciones asociadas a una etiqueta o tema específico (ej. *Python*, *SQL*).
+4. **Crear nuevo post**: Permite ingresar un nuevo título, contenido, etiquetas y estado para agregarlo al blog y guardarlo automáticamente en el archivo JSON.
+5. **Validar posts**: Inspecciona cada publicación para verificar la integridad de su estructura orientada a objetos (instancias correctas, campos no vacíos, estados válidos).
+6. **Guardar posts en JSON**: Vuelca y persiste de forma manual el estado actual de los objetos del blog en el archivo JSON.
+7. **Salir**: Finaliza la ejecución de la aplicación guardando los datos automáticamente.
+
+---
+
+## Cómo ejecutar el proyecto
+
+Asegúrate de tener instalado **Python** en tu equipo. Ubícate en la carpeta principal del proyecto a través de la terminal y ejecuta el archivo principal:
+
+```bash
+python main.py
