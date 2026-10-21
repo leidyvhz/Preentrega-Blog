@@ -1,36 +1,79 @@
-# Aplicación de Consola - Blog en Python (POO y JSON)
+# Blog Django
 
-Este proyecto es una aplicación interactiva en consola desarrollada en Python que permite gestionar, consultar, validar y persistir las publicaciones (posts) de un blog. Está estructurado aplicando los principios de **Programación Orientada a Objetos (POO)** y buenas prácticas de organización mediante paquetes y módulos.
+Proyecto base de un blog web desarrollado con Django.
+
+## Descripción
+
+Este repositorio contiene la estructura inicial de un proyecto Django para construir un blog web, cumpliendo con la configuración base del entorno, el registro de aplicaciones y el versionado con Git. El proyecto incluye una aplicación principal llamada `posts`.
 
 ## Estructura del Proyecto
 
-El proyecto se encuentra organizado modularmente en el paquete interno `blog/`:
+Preentrega-Blog/
+├── blog/                      # Módulo de la aplicación de consola
+│   ├── __init__.py
+│   ├── datos.py
+│   ├── menu.py
+│   ├── modelos.py
+│   ├── operaciones.py
+│   ├── posts.json
+│   └── validaciones.py
+├── blog_project/              # Configuración global del proyecto Django
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── posts/                     # Aplicación de Django para la gestión del blog
+│   ├── migrations/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   └── views.py
+├── .gitignore                 # Archivos excluidos del control de versiones
+├── db.sqlite3                 # Base de datos local de Django
+├── main.py                    # Punto de entrada para la aplicación en consola
+├── manage.py                  # Script de gestión para comandos de Django
+├── readme.md                  # Documentación del proyecto
+└── requirements.txt           # Dependencias del proyecto Python
 
-* **`main.py`**: Punto de entrada y orquestador del sistema. Controla el flujo principal con un ciclo interactivo y ejecuta las opciones seleccionadas por el usuario.
-* **`blog/modelos.py`**: Define las clases del dominio (`Autor`, `Post` y `Blog`), incluyendo sus métodos de negocio (listar, buscar, filtrar) y los métodos de serialización/deserialización para trabajar con diccionarios.
-* **`blog/datos.py`**: Encargado de la gestión de datos, conexión con el archivo persistente (`posts.json`) usando rutas absolutas seguras, y carga de datos iniciales.
-* **`blog/menu.py`**: Gestiona la interacción visual con el usuario en la consola y captura las opciones del menú principal.
-* **`blog/operaciones.py`** *(si aplica)*: Funciones de apoyo secundarias para las operaciones del sistema.
-* **`blog/validaciones.py`**: Control de calidad e integridad de los datos, verificando instancias y atributos obligatorios de los posts.
-* **`blog/posts.json`**: Archivo local en formato JSON donde se almacenan de manera persistente los posts.
+## Instalación y Ejecución
 
----
-
-## Funcionalidades del Menú Interactivo
-
-1. **Ver todos los posts**: Muestra el identificador, título, autor y estado actual de cada publicación cargada en el blog.
-2. **Buscar por título**: Realiza búsquedas de publicaciones según una palabra clave ingresada por el usuario (insensible a mayúsculas/minúsculas).
-3. **Filtrar por tag**: Permite filtrar las publicaciones asociadas a una etiqueta o tema específico (ej. *Python*, *SQL*).
-4. **Crear nuevo post**: Permite ingresar un nuevo título, contenido, etiquetas y estado para agregarlo al blog y guardarlo automáticamente en el archivo JSON.
-5. **Validar posts**: Inspecciona cada publicación para verificar la integridad de su estructura orientada a objetos (instancias correctas, campos no vacíos, estados válidos).
-6. **Guardar posts en JSON**: Vuelca y persiste de forma manual el estado actual de los objetos del blog en el archivo JSON.
-7. **Salir**: Finaliza la ejecución de la aplicación guardando los datos automáticamente.
-
----
-
-## Cómo ejecutar el proyecto
-
-Asegúrate de tener instalado **Python** en tu equipo. Ubícate en la carpeta principal del proyecto a través de la terminal y ejecuta el archivo principal:
-
+Clonar el repositorio:
 ```bash
-python main.py
+git clone https://github.com/leidyvhz/Preentrega-Blog.git
+```
+
+Entrar a la carpeta del proyecto:
+```
+cd Preentrega-Blog
+```
+
+Crear entorno virtual:
+python -m venv venv
+Activar entorno virtual:
+En Windows PowerShell:
+```
+.\venv\Scripts\Activate.ps1
+```
+En Linux o macOS:
+```
+source venv/bin/activate
+```
+
+Instalar dependencias:
+```
+pip install -r requirements.txt
+```
+
+Ejecutar el servidor:
+```
+python manage.py runserver
+```
+
+Abrir en el navegador:
+http://127.0.0.1:8000/
+
+Aplicaciones
+- posts: aplicación inicial para manejar las publicaciones del blog.
