@@ -8,6 +8,7 @@ Este repositorio contiene la estructura inicial de un proyecto Django para const
 
 ## Estructura del Proyecto
 
+```text
 Preentrega-Blog/
 ├── blog/                      # Módulo de la aplicación de consola
 │   ├── __init__.py
@@ -37,6 +38,7 @@ Preentrega-Blog/
 ├── manage.py                  # Script de gestión para comandos de Django
 ├── readme.md                  # Documentación del proyecto
 └── requirements.txt           # Dependencias del proyecto Python
+```
 
 ## Instalación y Ejecución
 
