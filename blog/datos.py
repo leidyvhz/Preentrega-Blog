@@ -33,14 +33,14 @@ posts_iniciales = [
     {
         "id" : 3,
         "titulo" : "Fundamentos en Python",
-        "" : "Vamos a ver cómo empezar con Python",
+        "contenido" : "Vamos a ver cómo empezar con Python",
         "autor" : perfil_autor,
         "tags" : ["Python", "Principiante"],
         "estado" : estados_post[2]
     },
     {
         "id" : 4,
-        "titulo" : "",
+        "titulo" : "Funciones en Python",
         "contenido" : "Vamos a aprender a crear funciones en Python",
         "autor" : perfil_autor,
         "tags" : ["Python", "Principiante", "Programación"],
