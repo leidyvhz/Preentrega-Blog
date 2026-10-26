@@ -1,81 +1,44 @@
 # Blog Django
 
-Proyecto base de un blog web desarrollado con Django.
+Proyecto web desarrollado con Django para la gestión de un blog.
 
 ## Descripción
 
-Este repositorio contiene la estructura inicial de un proyecto Django para construir un blog web, cumpliendo con la configuración base del entorno, el registro de aplicaciones y el versionado con Git. El proyecto incluye una aplicación principal llamada `posts`.
+Este repositorio contiene la estructura completa de un proyecto Django para construir un blog web, cumpliendo con la configuración base del entorno, el manejo de archivos estáticos (CSS e imágenes), plantillas HTML modulares con herencia y el versionado con Git. El proyecto incluye la aplicación principal `posts`.
 
 ## Estructura del Proyecto
 
 ```text
-Preentrega-Blog/
-├── blog/                      # Módulo de la aplicación de consola
-│   ├── __init__.py
-│   ├── datos.py
-│   ├── menu.py
-│   ├── modelos.py
-│   ├── operaciones.py
-│   ├── posts.json
-│   └── validaciones.py
+blog_consola/
 ├── blog_project/              # Configuración global del proyecto Django
 │   ├── __init__.py
 │   ├── asgi.py
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
-├── posts/                     # Aplicación de Django para la gestión del blog
-│   ├── migrations/
+├── posts/                     # Aplicación principal del blog
+│   ├── migrations/            # Historial de migraciones de base de datos
+│   ├── static/                # Archivos estáticos
+│   │   └── posts/
+│   │       ├── css/
+│   │       │   └── estilo.css # Hoja de estilos del proyecto
+│   │       └── img/
+│   │           └── blog.jpg   # Imágenes del proyecto
+│   ├── templates/             # Plantillas HTML de la aplicación
+│   │   └── posts/
+│   │       ├── acerca.html
+│   │       ├── base.html
+│   │       ├── inicio.html
+│   │       └── lista_posts.html
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
 │   ├── models.py
 │   ├── tests.py
-│   └── views.py
+│   ├── urls.py                # Enrutamiento local de la aplicación
+│   └── views.py               # Vistas para renderizar las plantillas
 ├── .gitignore                 # Archivos excluidos del control de versiones
-├── db.sqlite3                 # Base de datos local de Django
-├── main.py                    # Punto de entrada para la aplicación en consola
+├── db.sqlite3                 # Base de datos SQLite local
 ├── manage.py                  # Script de gestión para comandos de Django
 ├── readme.md                  # Documentación del proyecto
 └── requirements.txt           # Dependencias del proyecto Python
-```
-
-## Instalación y Ejecución
-
-Clonar el repositorio:
-```bash
-git clone https://github.com/leidyvhz/Preentrega-Blog.git
-```
-
-Entrar a la carpeta del proyecto:
-```
-cd Preentrega-Blog
-```
-
-Crear entorno virtual:
-python -m venv venv
-Activar entorno virtual:
-En Windows PowerShell:
-```
-.\venv\Scripts\Activate.ps1
-```
-En Linux o macOS:
-```
-source venv/bin/activate
-```
-
-Instalar dependencias:
-```
-pip install -r requirements.txt
-```
-
-Ejecutar el servidor:
-```
-python manage.py runserver
-```
-
-Abrir en el navegador:
-http://127.0.0.1:8000/
-
-Aplicaciones
-- posts: aplicación inicial para manejar las publicaciones del blog.
