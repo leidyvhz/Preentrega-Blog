@@ -42,3 +42,41 @@ blog_consola/
 ├── manage.py                  # Script de gestión para comandos de Django
 ├── readme.md                  # Documentación del proyecto
 └── requirements.txt           # Dependencias del proyecto Python
+```
+
+## Instalación y Ejecución
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/leidyvhz/Preentrega-Blog.git](https://github.com/leidyvhz/Preentrega-Blog.git)
+   cd blog_consola
+   ```
+
+2. **Crear el entorno virtual:**
+    ```bash
+    python -m venv venv
+    ```
+
+3. **Activar el entorno virtual:**
+    En Windows (PowerShell):
+    ```bash
+    venv\Scripts\Activate
+    ```
+
+    En Linux o macOS:
+    ```bash
+    source venv/bin/activate
+    ```
+
+4. **Instalar las dependencias:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+5. **Ejecutar el servidor de desarrollo de Django:**
+    ```bash
+    python manage.py runserver
+    ```
+
+6. **Abrir en el navegador:**
+    Ingresa a http://127.0.0.1:8000/ para ver el sitio funcionando.
