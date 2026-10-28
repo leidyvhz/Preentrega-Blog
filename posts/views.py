@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from posts.models import Post
 
 # Create your views here.
 def inicio(request):
@@ -8,14 +9,7 @@ def acerca(request):
     return render(request, 'posts/acerca.html')
 
 def lista_posts(request):
-    return render(request, 'posts/lista_posts.html')
-
-def lista_posts(request):
-    posts = [
-        {"id": 1, "titulo": "Mi primer post", "autor": "Ana"},
-        {"id": 2, "titulo": "Aprendiendo Django", "autor": "Luis"},
-        {"id": 3, "titulo": "Rutas y vistas", "autor": "Marta"},
-    ]
+    posts = Post.objects.filter(estado="publicado").order_by("-fecha_creacion")
     contexto = {
         "posts": posts
     }

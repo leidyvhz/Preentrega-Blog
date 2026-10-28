@@ -4,7 +4,14 @@
 <h1>POSTS DEL BLOG</h1>
     <ul>
         {% for post in posts %}
-            <li> {{ post.titulo }} - {{ post.autor }}</li>
+            <li> 
+                <p>Título: {{ post.titulo }}</p>
+                <p>Contenido: {{ post.contenido }}</p>
+                <p>Autor: {{ post.autor }}</p>
+                <p>Fecha de creación: {{post.fecha_creacion}}</p>
+                <p>Estado: {{ post.estado }}</p>
+                <br></br>
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}
