@@ -1,0 +1,29 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block title %} Contacto {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'posts/css/estilos.css' %}">
+
+<div class="contacto-container">
+    <h1>CONTACTO</h1>
+    <p>¿Tienes alguna consulta? Completa el siguiente formulario:</p>
+
+    {% if enviado %}
+        <div style="padding: 15px; background: #d4edda; color: #155724; border-radius: 5px; margin-bottom: 20px;">
+            Gracias, <strong>{{ nombre }}</strong>. El formulario se validó correctamente.
+        </div>
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn-enviar">
+                Enviar mensaje
+            </button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
