@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from posts.forms import ContactoForm, PostForm
-from posts.models import Post
+from .models import Autor, Post
 
 # Create your views here.
+
+# VISTA DEL INICIO EN LA RAIZ
 def inicio(request):
     return render(request, 'posts/inicio.html')
 
@@ -30,22 +32,25 @@ def detalle_post(request,id):
     return render(request,"posts/detalle_post.html",{"post":post})
 
 def post_form(request):
+    autores = Autor.objects.all() # Obtenemos los autores registrados
     if request.method == "POST":
         titulo = request.POST.get("titulo")
         contenido = request.POST.get("contenido")
-        autor = request.POST.get("autor")
+        autor_id = request.POST.get("autor") # Capturamos el ID del autor seleccionado
         estado = request.POST.get("estado")
         imagen = request.FILES.get("imagen")
+
+        autor_obj = Autor.objects.get(id=autor_id) if autor_id else None
 
         Post.objects.create(
             titulo=titulo,
             contenido=contenido,
-            autor=autor,
+            autor=autor_obj,
             estado=estado,
             imagen=imagen
         )
         return redirect("lista_posts")
-    return render(request,"posts/post_form.html")
+    return render(request, "posts/post_form.html", {"autores": autores})
 
 def editar_post(request,id):
     post = get_object_or_404(Post,id=id)
@@ -85,3 +90,28 @@ def contacto(request):
         form = ContactoForm()
 
     return render( request, "posts/contacto.html", {"form": form})
+
+def lista_autores(request):
+    autores = Autor.objects.all()
+    busqueda = request.GET.get("buscar")
+    if busqueda:
+        autores = autores.filter(username__icontains = busqueda)
+    return render(request,"autores/lista_autores.html",{"autores":autores})
+
+def perfil_autor(request,id):
+    autor = get_object_or_404(Autor,id=id)
+    publicaciones = autor.publicaciones.all()
+
+    return render(request,"autores/perfil_autor.html",{"autor":autor,"publicaciones":publicaciones})
+
+def crear_autor(request):
+    if request.method == "POST":
+        nombre = request.POST["nombre"]
+        apellido = request.POST["apellido"]
+        email = request.POST["email"]
+        username = request.POST["username"]
+        autor = Autor(nombre=nombre,apellido=apellido,email=email,username=username)
+        autor.save()
+
+        return redirect("inicio")
+    return render(request,"autores/crear_autor.html")
