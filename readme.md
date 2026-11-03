@@ -9,45 +9,44 @@ Este repositorio contiene la estructura completa de un proyecto Django para cons
 ## Estructura del Proyecto
 
 ```text
-blog_consola/
-├── blog_project/              # Configuración global del proyecto Django
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── media/                     # Carpeta de almacenamiento para imágenes subidas
-│   └── posts/                 # Archivos de imagen asociados a las publicaciones
-├── posts/                     # Aplicación principal del blog
-│   ├── migrations/            # Historial de migraciones de base de datos
-│   ├── static/                # Archivos estáticos
-│   │   └── posts/
-│   │       └── css/
-│   │           └── estilos.css # Hoja de estilos principal
-│   │       └── img/
-│   ├── templates/             # Plantillas HTML de la aplicación
-│   │   └── posts/
-│   │       ├── acerca.html
-│   │       ├── base.html
-│   │       ├── contacto.html
-│   │       ├── detalle_post.html
-│   │       ├── editar_post.html
-│   │       ├── inicio.html
-│   │       ├── lista_posts.html
-│   │       └── post_form.html
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py               # Formularios del sistema (ModelForms y Forms)
-│   ├── models.py              # Definición de modelos (Post)
-│   ├── tests.py
-│   ├── urls.py                # Enrutamiento local de la aplicación
-│   └── views.py               # Lógica de negocio y vistas de la app
-├── .gitignore                 # Archivos excluidos del control de versiones
-├── db.sqlite3                 # Base de datos SQLite local
-├── manage.py                  # Script de gestión para comandos de Django
-├── readme.md                  # Documentación del proyecto
-└── requirements.txt           # Dependencias del proyecto Python
+blog_project/              # Configuración global del proyecto Django
+├── __init__.py
+├── asgi.py
+├── settings.py
+├── urls.py
+└── wsgi.py
+media/                     # Carpeta de almacenamiento para imágenes subidas
+└── posts/                 # Archivos de imagen asociados a las publicaciones
+posts/                     # Aplicación principal del blog
+├── migrations/            # Historial de migraciones de base de datos
+├── static/                # Archivos estáticos
+│   └── posts/
+│       └── css/
+│           └── estilos.css # Hoja de estilos principal
+│       └── img/
+├── templates/             # Plantillas HTML de la aplicación
+│   └── posts/
+│       ├── acerca.html
+│       ├── base.html
+│       ├── contacto.html
+│       ├── detalle_post.html
+│       ├── editar_post.html
+│       ├── inicio.html
+│       ├── lista_posts.html
+│       └── post_form.html
+├── __init__.py
+├── admin.py
+├── apps.py
+├── forms.py               # Formularios del sistema (ModelForms y Forms)
+├── models.py              # Definición de modelos (Post)
+├── tests.py
+├── urls.py                # Enrutamiento local de la aplicación
+└── views.py               # Lógica de negocio y vistas de la app
+.gitignore                 # Archivos excluidos del control de versiones
+db.sqlite3                 # Base de datos SQLite local
+manage.py                  # Script de gestión para comandos de Django
+readme.md                  # Documentación del proyecto
+requirements.txt           # Dependencias del proyecto Python
 ```
 
 ## Manejo de Imágenes y Archivos Multimedia
