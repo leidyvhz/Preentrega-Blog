@@ -4,19 +4,33 @@ Crear Autor
 {% endblock %}
 {% block content %}    
 <h2>Nuevo Autor</h2>    
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <label>Nombre:</label>
-    <input type="text" name="nombre" id="nombre">
-    <br><br>
-    <label>Apellido:</label>
-    <input type="text" name="apellido" id="apellido">
-    <br><br>
-    <label>Email:</label>
-    <input type="text" name="email" id="email">
-    <br><br>
-    <label>Username:</label>
-    <input type="text" name="username" id="username">
+    <div>
+        {{form.nombre.label_tag}}
+        {{form.nombre}}
+        {{form.nombre.error}}
+    </div>
+    <div>
+        {{form.apellido.label_tag}}
+        {{form.apellido}}
+        {{form.nombre.error}}
+    </div>
+    <div>
+        {{form.email.label_tag}}
+        {{form.email}}
+        {{form.nombre.error}}
+    </div>
+    <div>
+        {{form.username.label_tag}}
+        {{form.username}}
+        {{form.username.error}}
+    </div>
+    <div>
+        {{form.imagen.label_tag}}
+        {{form.imagen}}
+        {{form.imagen.error}}
+    </div>
     <button type="submit">Crear Autor</button>
 </form>
 {% endblock %}

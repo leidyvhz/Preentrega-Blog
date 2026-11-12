@@ -16,19 +16,19 @@ body {
 /* --- 2. Encabezado y Cabecera --- */
 header {
     background-color: #d728bd5d;
-    padding: 2rem;
+    padding: 1.5rem 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
-    gap: 20px;
-    text-align: left;
+    justify-content: flex-start; /* Agrupa el contenido a la izquierda */
+    gap: 40px; /* Separación entre el logo y el bloque del menú */
     margin-bottom: 2rem;
 }
 
 header img {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #007bff;
@@ -55,10 +55,11 @@ main {
 
 /* --- 4. Estilos para el Menú de Navegación --- */
 nav {
-    margin: 1.5rem 0;
+    margin: 0; 
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    align-items: center; /* Mantiene el centrado vertical perfecto */
+    justify-content: flex-start; /* Alinea los enlaces a la izquierda */
+    gap: 20px; /* Separación entre cada botón del menú */
     flex-wrap: wrap;
 }
 
@@ -124,8 +125,10 @@ form label {
     color: #333;
 }
 
+/* Entradas de texto, correo y contraseña */
 form input[type="text"],
 form input[type="email"],
+form input[type="password"],
 form textarea {
     width: 100%;
     padding: 10px 12px;
@@ -133,14 +136,16 @@ form textarea {
     border-radius: 6px;
     font-size: 1rem;
     box-sizing: border-box;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-form input:focus,
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
 form textarea:focus {
-    border-color: #80bdff;
+    border-color: #007bff;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
 form textarea {
@@ -148,6 +153,9 @@ form textarea {
     min-height: 120px;
 }
 
+/* Botón de envío general de formularios */
+form button[type="submit"],
+form input[type="submit"],
 .btn-enviar {
     background-color: #007bff;
     color: white;
@@ -157,15 +165,35 @@ form textarea {
     font-size: 1rem;
     cursor: pointer;
     font-weight: 600;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+    width: fit-content;
 }
 
+form button[type="submit"]:hover,
+form input[type="submit"]:hover,
 .btn-enviar:hover {
     background-color: #0056b3;
 }
 
-/* Estilos para el formulario de filtros */
+/* Enlaces al pie de los formularios (registro/login) */
+form + p {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #555555;
+}
 
+form + p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+form + p a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para el formulario de filtros */
 .post-section form {
     display: flex;
     flex-wrap: wrap;
@@ -348,6 +376,155 @@ form textarea {
 
 .empty-state {
     text-align: center;
-    padding: 40px;
+    padding: 40
+}
+
+/* --- 6. Estilos para el Perfil en la Barra de Navegación --- */
+.nav-perfil-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+/* El enlace que contiene la foto y el saludo (Hereda el estilo de 'nav a') */
+.nav-usuario {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre la foto y el texto */
+    /* No le ponemos background ni color para que use los de 'nav a' y 'nav a:hover' */
+}
+
+/* La imagen de perfil en miniatura */
+.nav-avatar {
+    width: 35px; /* Un poco más pequeña para que encaje perfecto con el menú */
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* El texto de "Hola, Leidy" */
+.nav-saludo {
+    /* Hereda el color y fuente del enlace principal */
+    margin: 0;
+}
+
+/* Saludo cuando no hay perfil */
+.nav-saludo-simple {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555555; /* Mismo color de los otros enlaces */
+    padding: 8px 16px;
+}
+
+/* --- 7. Estilos de la página de Perfil de Autor --- */
+.perfil-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+/* Control del tamaño de la foto gigante */
+.perfil-imagen-container {
+    flex-shrink: 0; /* Evita que la imagen se aplaste */
+}
+
+.perfil-imagen {
+    width: 150px; /* Tamaño máximo de la imagen */
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%; /* La hace redonda */
+    border: 4px solid #f4f6f9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Información del lado derecho */
+.perfil-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.perfil-username {
+    font-size: 2rem;
+    color: #1e1b4b;
+    margin: 0;
+}
+
+.perfil-nombre-real {
+    font-size: 1.1rem;
     color: #64748b;
+    margin: 0;
+}
+
+/* Botones de edición de perfil */
+.perfil-acciones {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-secundario {
+    text-decoration: none;
+    color: #007bff;
+    background-color: #e0f2fe;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-secundario:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+/* --- 8. Estilos para el Detalle del Post (Layout de perfil) --- */
+.detalle-header-flex {
+    display: flex;
+    align-items: center; /* Centra verticalmente la información con la imagen */
+    gap: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #f1f5f9; /* Línea divisora suave debajo del header */
+}
+
+/* Restringe la caja de la imagen para que no se aplaste */
+.detalle-imagen-caja {
+    flex-shrink: 0; 
+}
+
+.detalle-imagen-caja img {
+    width: 380px; /* Ancho fijo para mantener la proporción rectangular */
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Caja de los textos (Título, autor, estado) */
+.detalle-info-caja {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detalle-info-caja h1 {
+    font-size: 2.2rem;
+    color: #1e1b4b;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.post-meta-detalle {
+    display: flex;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 500;
 }

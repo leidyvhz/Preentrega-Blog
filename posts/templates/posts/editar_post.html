@@ -1,27 +1,39 @@
 {% extends 'posts/base.html' %}
 {% block title %} Editar Post {% endblock %}
 {% block content %}
-<h1>EDITAR POST</h1>
-<form method="POST">
-    {% csrf_token %}
-    <label>Título:</label>
-    <input type="text" name="titulo"  value="{{post.titulo}}" required>
-    <br><br>
 
-    <label>Contenido:</label>
-    <textarea name="contenido"required>{{post.contenido}}</textarea>
-    <br><br>
+<div class="contacto-container">
+    <h1>EDITAR POST</h1>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <p>
+            <label>Título:</label>
+            <input type="text" name="titulo" value="{{post.titulo}}" required>
+        </p>
 
-    <label >Autor:</label>
-    <input type="text" name="autor" value="{{post.autor}}" required>
+        <p>
+            <label>Contenido:</label>
+            <textarea name="contenido" required>{{post.contenido}}</textarea>
+        </p>
 
-    <label>Estado:</label>
-    <select name="estado">
-        <option value="borrador">Borrador</option>
-        <option value="publicado">Publicado</option>
-        <option value="archivado">Archivado</option>
-    </select>
+        <p>
+            <label>Imagen:</label>
+            <input type="file" name="imagen" accept="image/*">
+        </p>
 
-    <button type="submit">Guardar cambios</button>
-</form>
+        <p>
+            <label>Estado:</label>
+            <select name="estado">
+                <option value="borrador" {% if post.estado == 'borrador' %}selected{% endif %}>Borrador</option>
+                <option value="publicado" {% if post.estado == 'publicado' %}selected{% endif %}>Publicado</option>
+                <option value="archivado" {% if post.estado == 'archivado' %}selected{% endif %}>Archivado</option>
+            </select>
+        </p>
+
+        <button type="submit" class="btn-enviar">Guardar cambios</button>
+    </form>
+</div>
+
 {% endblock %}

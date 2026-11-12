@@ -12,9 +12,32 @@
         <img src="{% static 'posts/img/blog.jpg' %}" alt="Imagen del blog">
         <nav>
             <a href="{% url 'inicio' %}">Inicio</a>
-            <a href="{% url 'acerca' %}">About Me</a>
             <a href="{% url 'lista_posts' %}">Posts</a>
             <a href="{% url 'contacto' %}">Contacto</a>
+            
+            {% if user.is_authenticated %}
+             <div class="nav-perfil-container">
+                
+                {% if user.perfil_autor %}
+                    <a href="{% url 'perfil_autor' user.perfil_autor.id %}" class="nav-usuario">
+                        {% if user.perfil_autor.imagen %}
+                            <img src="{{ user.perfil_autor.imagen.url }}" alt="Avatar" class="nav-avatar">
+                        {% endif %}
+                        <span class="nav-saludo">Hola, {{ user.first_name|default:user.username }}</span>
+                    </a>
+                {% else %}
+                    <span class="nav-saludo-simple">Hola, {{ user.username }}</span>
+                {% endif %}
+                
+                <form method="POST" action="{% url 'logout' %}" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-primary">Cerrar sesión</button>
+                </form>
+             </div>
+            {% else %}
+                <a href="{% url 'login' %}">Iniciar sesión</a>
+                <a href="{% url 'registro' %}">Regístrate</a>
+            {% endif %}
         </nav>
     </header>
     <main>

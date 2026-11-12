@@ -1,18 +1,31 @@
-from posts import views
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, reverse_lazy
+from posts import views
+from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.inicio, name="inicio"),
-    path('about/', views.acerca, name="acerca"),
-    path('posts/', views.lista_posts, name="lista_posts"),
-    path('contacto/', views.contacto, name="contacto"),
+    path('', views.inicio, name='inicio'),
+    path('posts/', views.lista_posts, name='lista_posts'),
+    path('post/<int:post_id>',views.detalle_post, name= "detalle_post"),
     path('crear/', views.post_form, name="post_form"),
-    path('post/<int:id>/', views.detalle_post, name="detalle_post"),
-    path('post/editar/<int:id>/', views.editar_post, name="editar_post"),
-    path('post/eliminar/<int:id>/', views.eliminar_post, name="eliminar_post"),
+    path('editar/<int:id>',views.editar_post, name= "editar_post"),
+    path('eliminar/<int:id>',views.eliminar_post, name="eliminar_post"),
     path('autor/crear/',views.crear_autor,name="crear_autor"),
     path('autores/',views.lista_autores,name="lista_autores"),
-    path('autor/<int:id>/',views.perfil_autor,name="perfil_autor"),
+    path('autor/<int:autor_id>/',views.perfil_autor,name="perfil_autor"),
+    path('autor/<int:autor_id>/editar',views.editar_perfil,name="editar_perfil"),
+    path("contacto/", views.contacto, name="contacto"),
+    path('post/<int:post_id>/comentar',views.dejar_comentario, name= "dejar_comentario"),
+    path("post/<int:post_id>/calificar",views.calificar_post,name="calificar_post"),
+    path('registro/',views.registro, name="registro"),
+    path('login/',views.iniciar_sesion, name="login"),
+    path('logout/',views.cerrar_sesion, name="logout"),
+    path('cambiar_contraseña/',auth_views.PasswordChangeView.as_view(template_name= "autenticacion/cambiar_contraseña.html",
+                                                                     success_url = reverse_lazy("login")),name="cambiar_contraseña")
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

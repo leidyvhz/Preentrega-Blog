@@ -1,0 +1,20 @@
+{% extends "posts/base.html" %}
+{% block title %}Crear cuenta{% endblock %}
+{% block content %}    
+
+<h1>Regístrate</h1>
+
+{% if form.errors %}
+    <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+        <strong>Por favor valida los siguientes errores:</strong>
+        {{ form.errors }}
+    </div>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Registrarme</button>
+</form>
+<p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Iniciar sesión</a></p>
+{% endblock %}
