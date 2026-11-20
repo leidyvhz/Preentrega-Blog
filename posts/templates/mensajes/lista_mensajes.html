@@ -1,0 +1,115 @@
+{% extends "posts/base.html" %}
+{% block title %}Mensajes{% endblock %}
+{% block content %}
+<div class="bandeja-container">
+
+    <div class="bandeja-header">
+        <h1>Mensajes</h1>
+        <p>Conéctate y conversa con otros autores.</p>
+    </div>
+
+    <!-- CONTACTOS PARA INICIAR UNA CONVERSACIÓN -->
+
+    <div class="contactos-seccion">
+
+        <h3>Iniciar una conversación</h3>
+
+        <div class="contactos-lista">
+
+            {% for autor in autores %}
+
+                <a href="{% url 'conversacion' autor.id %}" class="contacto">
+
+                    {% if autor.imagen %}
+                        <img src="{{ autor.imagen.url }}"
+                             alt="{{ autor.username }}"
+                             class="avatar">
+                    {% else %}
+                        <div class="avatar-placeholder">
+                            {{ autor.username|first|upper }}
+                        </div>
+                    {% endif %}
+
+                    <span class="contacto-nombre">
+                        {{ autor.username }}
+                    </span>
+
+                </a>
+
+            {% empty %}
+
+                <p class="text-muted">
+                    Todavía no hay otros autores disponibles.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <!-- CONVERSACIONES EXISTENTES -->
+
+    <div class="conversaciones-seccion">
+
+        <h3>Mis conversaciones</h3>
+
+        <div class="lista-conversaciones">
+
+            {% for conversacion in conversaciones %}
+
+                <a href="{% url 'conversacion' conversacion.autor.id %}"
+                   class="conversacion-item">
+
+                    {% if conversacion.autor.imagen %}
+                        <img src="{{ conversacion.autor.imagen.url }}"
+                             alt="{{ conversacion.autor.username }}"
+                             class="avatar">
+                    {% else %}
+                        <div class="avatar-placeholder">
+                            {{ conversacion.autor.username|first|upper }}
+                        </div>
+                    {% endif %}
+
+                    <div class="conversacion-info">
+
+                        <strong>{{ conversacion.autor.username }}</strong>
+
+                        <p>
+                            {% if conversacion.ultimo_mensaje.remitente_id == autor_actual.id %}
+                                Vos:
+                            {% endif %}
+
+                            {{ conversacion.ultimo_mensaje.contenido|truncatechars:50 }}
+                        </p>
+
+                    </div>
+
+                    <small class="conversacion-fecha">
+                        {{ conversacion.ultimo_mensaje.fecha_envio|date:"d/m H:i" }}
+                    </small>
+
+                    {% if conversacion.mensajes_sin_leer > 0 %}
+                        <span class="mensajes-no-leidos">
+                            {{ conversacion.mensajes_sin_leer }}
+                        </span>
+                    {% endif %}
+
+                </a>
+
+            {% empty %}
+
+                <div class="bandeja-vacia">
+                    <h4>No tienes conversaciones todavía</h4>
+                    <p>Elige un autor de arriba para comenzar a conversar.</p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

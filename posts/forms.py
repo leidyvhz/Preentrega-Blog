@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from posts.models import Autor, Calificacion, Comentario, Post
+from posts.models import Mensaje, Autor, Comentario, Post
 
 User = get_user_model()
 
@@ -22,7 +22,6 @@ class PostForm(forms.ModelForm):
         fields = [
             "titulo",
             "contenido",
-            "estado",
             "imagen"
         ]
 
@@ -59,21 +58,6 @@ class ComentarioForm(forms.ModelForm):
             })
         }
 
-class CalificacionForm(forms.ModelForm):
-    estrellas = forms.TypedMultipleChoiceField(
-        choices = [
-            (1,"1 estrella"),
-            (2,"2 estrellas"),
-            (3,"3 estrellas"),
-            (4,"4 estrellas"),
-            (5,"5 estrellas"),
-        ],
-        coerce= int,
-        widget= forms.RadioSelect
-    )
-    class Meta:
-        model = Calificacion
-        fields = ["estrellas"]
 
 class AutorCreateForm(forms.ModelForm):
     class Meta:
@@ -83,7 +67,9 @@ class AutorCreateForm(forms.ModelForm):
             "apellido",
             "email",
             "username",
-            "imagen"
+            "biografia",
+            "imagen",
+            "linkweb"
 
         ]
 
@@ -103,21 +89,30 @@ class AutorForm(forms.ModelForm):
             "nombre",
             "apellido",
             "email",
-            "imagen"
+            "username",
+            "biografia",
+            "imagen",
+            "linkweb"
             
         ]
         labels = {
             "nombre":"Nombre",
             "apellido":"Apellido",
             "email":"Email",
-            "imagen":"Avatar"
+            "username":"Username",
+            "biografia":"Biografía",
+            "imagen":"Avatar",
+            "linkweb":"Link Web"
         }
 
         widgets = {
             "nombre": forms.TextInput(attrs={"class":"form-control"}),
             "apellido": forms.TextInput(attrs={"class":"form-control"}),
             "email": forms.EmailInput(attrs={"class":"form-control"}),
-            "imagen":forms.ClearableFileInput(attrs={"class":"form-control"})
+            "username": forms.TextInput(attrs={"class":"form-control"}),
+            "biografia": forms.TextInput(attrs={"class":"form-control"}),
+            "imagen": forms.ClearableFileInput(attrs={"class":"form-control"}),
+            "linkweb": forms.TextInput(attrs={"class":"form-control"})
         }
 
 class RegistroForm(UserCreationForm):
@@ -176,3 +171,42 @@ class RegistroForm(UserCreationForm):
             )
 
         return usuario
+
+class CalificacionForm(forms.Form):
+
+    estrellas = forms.ChoiceField(
+        choices=[
+            ("1", "1 estrella"),
+            ("2", "2 estrellas"),
+            ("3", "3 estrellas"),
+            ("4", "4 estrellas"),
+            ("5", "5 estrellas"),
+        ],
+        widget=forms.RadioSelect,
+        required=True
+    )
+
+class MensajeForm(forms.ModelForm):
+    class Meta:
+        model = Mensaje 
+        fields = [
+            "remitente",
+            "destinatario",
+            "contenido"
+        ]
+
+        widgets = {
+            "remitente" : forms.Select(attrs={"class":"form-control"}),
+            "destinatario": forms.Select(attrs={"class":"form-control"}),
+            "contenido": forms.Textarea(attrs={"class":"form-control","placeholder":"Escribi tu mensaje","rows":3})
+        }
+    def clean(self):
+        cleaned_data = super().clean()
+        remitente = cleaned_data.get("remitente")
+        destinatario = cleaned_data.get("destinatario")
+        
+        if remitente and destinatario and remitente == destinatario:
+            raise forms.ValidationError(
+                "No podes mandarte mensajes a vos mismo"
+            )
+        return cleaned_data

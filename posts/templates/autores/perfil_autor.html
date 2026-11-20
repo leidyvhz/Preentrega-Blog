@@ -2,93 +2,207 @@
 {% block title %}Autores{% endblock %}
 {% block content %}    
 
-<div class="perfil-header">
-    {% if autor.imagen %}
-    <div class="perfil-imagen-container">
-        <img src="{{autor.imagen.url}}" alt="Foto de {{autor.username}}" class="perfil-imagen">
-    </div>
-    {% endif %}
-    
-    <div class="perfil-info">
-        <h2 class="perfil-username">{{autor.username}}</h2>
-        <p class="perfil-nombre-real">{{autor.nombre}} {{autor.apellido}}</p>
-        
-        {% if user.is_authenticated and user.id == autor.usuario_id %}
-        <div class="perfil-acciones">
-            <a href="{% url 'editar_perfil' autor.id %}" class="btn-secundario">Editar perfil</a>
-            <a href="{% url 'cambiar_contraseña' %}" class="btn-secundario">Cambiar contraseña</a>
-            <a href="{% url 'post_form' %}" class="btn-secundario" style="background-color: #d1fae5; color: #059669;">+ Crear post</a>
-        </div>
-        {% endif %}
-    </div>
-</div>
+<div class="perfil-container">
 
-{% if posts %}
-<span>{{posts | length}} post{{posts | length | pluralize}}</span>
-{% endif %}
-<div>
-    <h2>Posts de {{autor.username }}</h2>
-    {%if posts%}
-        {% for post in posts %}
-        <h4>{{post.titulo}}</h4>
-        <p>{{post.descripcion}}</p>
-    
-        <div class="post-footer">
-            {% if post.estado %}
-                <span class="post-estado">
-                    {{ post.get_estado_display }}
-                </span>
+    <!-- CABECERA DEL PERFIL -->
+
+    <!-- CABECERA DEL PERFIL -->
+
+    <!-- CABECERA DEL PERFIL -->
+
+    <section class="perfil-header perfil-header--avatar-izquierda">
+
+
+            <img src="{{ autor.avatar_url }}"
+                alt="{{ autor.username }}"
+                class="perfil-avatar">
+
+
+        <div class="perfil-info">
+
+            <h1>{{ autor.username }}</h1>
+
+            <div class="perfil-username">
+                Perfil de autor
+            </div>
+
+            <p class="perfil-nombre">
+                {{ autor.nombre }} {{ autor.apellido }}
+            </p>
+
+            {% if autor.biografia %}
+                <p class="perfil-biografia">
+                    {{ autor.biografia }}
+                </p>
             {% endif %}
 
-            <div class="post-acciones">
-                <!-- Ver -->
-                <a href="{% url 'detalle_post' post.id %}"
-                   class="btn-icon btn-ver"
-                   title="Ver post"
-                   aria-label="Ver post">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
+            {% if autor.linkweb %}
+                <a href="{{ autor.linkweb }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="perfil-linkweb">
+                    {{ autor.linkweb }}
                 </a>
-                {% if user.is_authenticated and post.autor.usuario_id == user.id %}
+            {% endif %}
 
-                <!-- Editar -->
-                <a href="{% url 'editar_post' post.id %}"
-                   class="btn-icon btn-editar"
-                   title="Editar publicación"
-                   aria-label="Editar publicación">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M12 20h9"></path>
-                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                    </svg>
-                </a>
+            <div class="perfil-estadisticas">
 
-                <!-- Eliminar -->
-                <form action="{% url 'eliminar_post' post.id %}"
-                      method="POST"
-                      class="form-eliminar"
-                      onsubmit="return confirm('¿Seguro que querés eliminar esta publicación?');">
-                    {% csrf_token %}
-                    <button type="submit"
-                            class="btn-icon btn-eliminar"
-                            title="Eliminar publicación"
-                            aria-label="Eliminar publicación">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" >
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
-                            <path d="M10 11v6"></path>
-                            <path d="M14 11v6"></path>
-                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
-                        </svg>
-                    </button>
-                </form>
-                {% endif %}
+                <div class="perfil-estadistica">
+                    <strong>{{ posts|length }}</strong>
+                    <span>
+                        {% if posts|length == 1 %}
+                            Post
+                        {% else %}
+                            Posts
+                        {% endif %}
+                    </span>
+                </div>
+
             </div>
+
+            {% if user.is_authenticated and user.id == autor.usuario_id %}
+
+                <div class="perfil-acciones">
+                    <a href="{% url 'editar_perfil' autor.id %}"
+                        class="btn-perfil btn-editar-perfil">
+                        Editar perfil
+                    </a>
+
+                    <a href="{% url 'cambiar_contraseña' %}"
+                        class="btn-perfil btn-password">
+                        Cambiar contraseña
+                    </a>
+            </div>
+
+            {% endif %}
+
         </div>
-        {% endfor%}
-    {% else %}
-    <div>Este autor todavia no publico nada</div>
-    {% endif %}
+
+    </section>
+
+    <!-- PUBLICACIONES DEL AUTOR -->
+
+    <section>
+
+        <div class="posts-header">
+            <h2>Posts de {{ autor.username }}</h2>
+            <p>Historias y contenidos compartidos por este autor.</p>
+        </div>
+
+        {% if posts %}
+
+            <div class="posts-grid">
+
+                {% for post in posts %}
+                    <article class="publicacion-detalle perfil-post-card">
+
+                        {% if post.imagen %}
+                            <img src="{{ post.imagen.url }}"
+                                alt="{{ post.titulo }}"
+                                class="publicacion-imagen">
+                        {% endif %}
+
+                        <h2>
+                            <a href="{% url 'detalle_post' post_id=post.id %}">
+                                {{ post.titulo }}
+                            </a>
+                        </h2>
+
+                        <p class="publicacion-descripcion detalle-descripcion">
+                            {{ post.contenido }}
+                        </p>
+
+                        <div class="publicacion-meta">
+                            <span class="publicacion-autor">
+                                Por {{ autor }}
+                            </span>
+                            <span class="publicacion-fecha">
+                                {{ post.fecha_creacion|date:"d/m/Y" }}
+                            </span>
+                        </div>
+
+                        <div class="publicacion-footer">
+
+                            {% if post.estado == "publicado" %}
+                                <span class="publicacion-estado estado-publicado">
+                                    Publicado
+                                </span>
+                            {% elif post.estado == "borrador" %}
+                                <span class="publicacion-estado estado-borrador">
+                                    Pendiente de aprobación
+                                </span>
+                            {% else %}
+                                <span class="publicacion-estado estado-archivado">
+                                    Archivado
+                                </span>
+                            {% endif %}
+
+                            <div class="publicacion-acciones">
+                                <a href="{% url 'detalle_post' post_id=post.id %}"
+                                    class="btn-icon btn-ver"
+                                    title="Ver post"
+                                    aria-label="Ver post">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </a>
+
+                                {% if user.is_authenticated and post.autor.usuario_id == user.id %}
+                                    <a href="{% url 'editar_post' post.id %}"
+                                        class="btn-icon btn-editar"
+                                        title="Editar post"
+                                        aria-label="Editar post">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 20h9"></path>
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                        </svg>
+                                    </a>
+
+                                    <form action="{% url 'eliminar_post' post.id %}"
+                                        method="POST"
+                                        class="form-eliminar"
+                                        onsubmit="return confirm('¿Seguro que quieres eliminar este post?');">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                            class="btn-icon btn-eliminar"
+                                            title="Eliminar post"
+                                            aria-label="Eliminar post">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                                                <path d="M10 11v6"></path>
+                                                <path d="M14 11v6"></path>
+                                                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                    </article>
+                {% empty %}
+                    <div class="empty-state">
+                        <h3>Aún no hay posts</h3>
+                        <p>Este autor todavía no ha compartido publicaciones.</p>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="posts-vacios">
+                <h3>Este autor todavía no publicó nada</h3>
+                <p>Cuando comparta su primer post, aparecerá aquí.</p>
+            </div>
+
+        {% endif %}
+
+    </section>
+
 </div>
+
 {% endblock %}

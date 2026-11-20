@@ -1,0 +1,52 @@
+{% extends "posts/base.html" %}
+{% block title %}Notificaciones{% endblock %}
+{% block content %}
+
+<section class="notificaciones-section">
+    <div class="notificaciones-header">
+        <div>
+            <h2>Notificaciones</h2>
+            <p>Avisos sobre la aprobación o rechazo de tus publicaciones.</p>
+        </div>
+    </div>
+
+    <div class="notificaciones-lista">
+        {% for notif in notificaciones %}
+            <div class="notificacion-card {{ notif.tipo }}">
+                <div class="notificacion-contenido">
+                    <span class="notificacion-estado">
+                        {% if notif.tipo == "aprobado" %}
+                            ✓ Aprobado
+                        {% else %}
+                            ✕ Rechazado
+                        {% endif %}
+                    </span>
+                    <p class="notificacion-mensaje">{{ notif.mensaje }}</p>
+                    {% if notif.motivo %}
+                        <p class="notificacion-motivo">
+                            <strong>Comentario del moderador:</strong> {{ notif.motivo }}
+                        </p>
+                    {% endif %}
+                    <small class="notificacion-fecha">
+                        {{ notif.fecha_creacion|date:"d/m/Y H:i" }}
+                    </small>
+                </div>
+
+                <div class="notificacion-acciones">
+                    {% if notif.post and notif.post.estado == "publicado" %}
+                        <a href="{% url 'detalle_post' post_id=notif.post.id %}" class="notificacion-accion-link">
+                            Ver post →
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <h3>No tienes notificaciones</h3>
+                <p>Aquí aparecerán los avisos cuando revisen tus posts.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

@@ -2,38 +2,53 @@
 {% block title %} Editar Post {% endblock %}
 {% block content %}
 
-<div class="contacto-container">
-    <h1>EDITAR POST</h1>
-    
+<div class="editar-container">
+
+    <h1>Editar post</h1>
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        
-        <p>
+
+        <div class="campo">
             <label>Título:</label>
-            <input type="text" name="titulo" value="{{post.titulo}}" required>
-        </p>
+            <input type="text" name="titulo"
+                   value="{{ post.titulo }}" required>
+        </div>
 
-        <p>
-            <label>Contenido:</label>
-            <textarea name="contenido" required>{{post.contenido}}</textarea>
-        </p>
+        <div class="campo">
+            <label>Descripción:</label>
+            <textarea name="descripcion" required>{{ post.descripcion }}</textarea>
+        </div>
 
-        <p>
-            <label>Imagen:</label>
-            <input type="file" name="imagen" accept="image/*">
-        </p>
+        <div class="campo">
+            <label>Autor:</label>
+            <input type="text" value="{{ post.autor }}" disabled>
+        </div>
 
-        <p>
-            <label>Estado:</label>
-            <select name="estado">
-                <option value="borrador" {% if post.estado == 'borrador' %}selected{% endif %}>Borrador</option>
-                <option value="publicado" {% if post.estado == 'publicado' %}selected{% endif %}>Publicado</option>
-                <option value="archivado" {% if post.estado == 'archivado' %}selected{% endif %}>Archivado</option>
-            </select>
-        </p>
+        <div class="campo">
+            <label>Imagen actual:</label>
 
-        <button type="submit" class="btn-enviar">Guardar cambios</button>
+            {% if post.url_imagen %}
+                <img src="{{ post.url_imagen.url }}"
+                     alt="Imagen del post"
+                     class="imagen-actual">
+            {% else %}
+                <p>Este post no tiene imagen.</p>
+            {% endif %}
+        </div>
+
+        <div class="campo">
+            <label>Cambiar imagen:</label>
+            <input type="file" name="url_imagen" accept="image/*">
+            <small>Si no seleccionas otra imagen, se conservará la actual.</small>
+        </div>
+
+        <button type="submit" class="btn-guardar">
+            Guardar cambios
+        </button>
+
     </form>
+
 </div>
 
 {% endblock %}

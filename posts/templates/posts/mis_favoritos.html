@@ -1,0 +1,100 @@
+{% extends "posts/base.html" %}
+{% block title %}
+Mis favoritos
+{% endblock %}
+{% block content %}
+
+<section class="publicaciones-section favoritos-section">
+
+    <div class="section-heading">
+        <div>
+            <h2>Mis favoritos</h2>
+            <p>Acá encuentras los posts que guardaste.</p>
+        </div>
+    </div>
+
+    <div class="favoritos-grid">
+
+        {% for post in posts %}
+
+            <article class="favorito-card">
+
+                {% if post.imagen %}
+                    <img src="{{ post.imagen.url }}"
+                         alt="{{ post.titulo }}"
+                         class="favorito-imagen">
+                {% endif %}
+
+                <div class="favorito-card-header">
+                    <span class="favorito-label">♥ Favorito</span>
+                </div>
+
+                <h3>{{ post.titulo }}</h3>
+
+                <p class="favorito-descripcion">
+                    {{ post.contenido|truncatechars:150 }}
+                </p>
+
+                <div class="favorito-meta">
+                    <span>Por {{ post.autor }}</span>
+                    <span>{{ post.fecha_creacion|date:"d/m/Y" }}</span>
+                </div>
+
+                <div class="favorito-card-actions">
+
+                    <a
+                        href="{% url 'detalle_post' post_id=post.id %}"
+                        class="favorito-ver"
+                    >
+                        Ver post →
+                    </a>
+
+                    <form
+                        method="POST"
+                        action="{% url 'alternar_favorito' post.id %}"
+                    >
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="next"
+                            value="{{ request.path }}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="favorito-quitar"
+                            title="Quitar de favoritos"
+                        >
+                            ♥ Quitar
+                        </button>
+                    </form>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="favoritos-vacio">
+                <span class="favoritos-vacio-icon">♡</span>
+
+                <h3>Todavía no tienes favoritos</h3>
+
+                <p>
+                    Explora los posts y guarda
+                    los que más te interesen.
+                </p>
+
+                <a href="{% url 'lista_posts' %}">
+                    Explorar posts
+                </a>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

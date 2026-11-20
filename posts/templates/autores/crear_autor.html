@@ -7,29 +7,39 @@ Crear Autor
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div>
-        {{form.nombre.label_tag}}
-        {{form.nombre}}
-        {{form.nombre.error}}
+        {{ form.nombre.label_tag }}
+        {{ form.nombre }}
+        {{ form.nombre.errors }}
     </div>
     <div>
-        {{form.apellido.label_tag}}
-        {{form.apellido}}
-        {{form.nombre.error}}
+        {{ form.apellido.label_tag }}
+        {{ form.apellido }}
+        {{ form.apellido.errors }}
     </div>
     <div>
-        {{form.email.label_tag}}
-        {{form.email}}
-        {{form.nombre.error}}
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.email.errors }}
     </div>
     <div>
-        {{form.username.label_tag}}
-        {{form.username}}
-        {{form.username.error}}
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {{ form.username.errors }}
     </div>
     <div>
-        {{form.imagen.label_tag}}
-        {{form.imagen}}
-        {{form.imagen.error}}
+        {{ form.biografia.label_tag }}
+        {{ form.biografia }}
+        {{ form.biografia.errors }}
+    </div>
+    <div>
+        {{ form.linkweb.label_tag }}
+        {{ form.linkweb }}
+        {{ form.linkweb.errors }}
+    </div>
+    <div>
+        {{ form.imagen.label_tag }}
+        {{ form.imagen }}
+        {{ form.imagen.errors }}
     </div>
     <button type="submit">Crear Autor</button>
 </form>

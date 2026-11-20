@@ -1,0 +1,148 @@
+{% extends "posts/base.html" %}
+{% block title %}
+Chat
+{% endblock %}
+{% block content %}
+<div class="chat-wrapper">
+
+    <!-- Encabezado del chat -->
+    <div class="chat-header">
+
+        {% if destinatario.imagen %}
+
+            <img src="{{ destinatario.imagen.url }}"
+                 class="chat-avatar"
+                 alt="{{ destinatario.username }}">
+
+        {% else %}
+
+            <div class="chat-avatar-placeholder">
+                {{ destinatario.username|first|upper }}
+            </div>
+
+        {% endif %}
+
+        <div>
+            <h4>{{ destinatario.username }}</h4>
+            <small>Conversación privada</small>
+        </div>
+
+    </div>
+
+    <!-- Mensajes -->
+    <div class="chat-messages" id="chat-messages">
+
+        {% for mensaje in mensajes %}
+
+            {% if mensaje.remitente_id == autor_actual.id %}
+
+                <!-- Mensaje enviado por mí -->
+                <div class="mensaje-fila propio">
+
+                    {% if autor_actual.imagen %}
+                        <img src="{{ autor_actual.imagen.url }}"
+                             class="mensaje-avatar"
+                             alt="Mi avatar">
+                    {% else %}
+                        <div class="mensaje-avatar-placeholder">
+                            {{ autor_actual.username|first|upper }}
+                        </div>
+                    {% endif %}
+
+                    <div class="mensaje-burbuja">
+
+                        <p>{{ mensaje.contenido|linebreaksbr }}</p>
+
+                        <small class="mensaje-info">
+                            {{ mensaje.fecha_envio|date:"H:i" }}
+
+                            {% if mensaje.leido %}
+                                ✓✓ Leído
+                            {% else %}
+                                ✓ Enviado
+                            {% endif %}
+                        </small>
+
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <!-- Mensaje recibido -->
+                <div class="mensaje-fila ajeno">
+
+                    {% if destinatario.imagen %}
+                        <img src="{{ destinatario.imagen.url }}"
+                             class="mensaje-avatar"
+                             alt="{{ destinatario.username }}">
+                    {% else %}
+                        <div class="mensaje-avatar-placeholder">
+                            {{ destinatario.username|first|upper }}
+                        </div>
+                    {% endif %}
+
+                    <div class="mensaje-burbuja">
+
+                        <p>{{ mensaje.contenido|linebreaksbr }}</p>
+
+                        <small class="mensaje-info">
+                            {{ mensaje.fecha_envio|date:"H:i" }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        {% empty %}
+
+            <div class="chat-empty">
+                <h5>¡Comienza la conversación!</h5>
+                <p>Envía tu primer mensaje.</p>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Formulario para enviar -->
+    <div class="chat-form">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <textarea
+                name="contenido"
+                class="form-control"
+                rows="1"
+                placeholder="Escribí un mensaje..."
+                required></textarea>
+
+            <button type="submit" class="btn btn-success">
+                Enviar
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="text-center mb-4">
+    <a href="{% url 'lista_mensajes' %}" class="btn btn-outline-secondary">
+        Volver a mensajes
+    </a>
+</div>
+
+<!-- Bajar automáticamente al último mensaje -->
+<script>
+    const chatMessages = document.getElementById("chat-messages");
+
+    if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+</script>
+
+{% endblock %}

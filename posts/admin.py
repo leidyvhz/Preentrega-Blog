@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import Post, Autor
 
-# 1. Importa también el modelo Autor desde models.py
-
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = (
@@ -13,7 +11,7 @@ class PostAdmin(admin.ModelAdmin):
     )
 
 @admin.register(Autor)
-class AutorAdmin(admin.ModelAdmin):
+class PerfilAdmin(admin.ModelAdmin):
     list_display = (
         "username",
         "nombre",

@@ -1,6 +1,334 @@
 {% extends 'posts/base.html' %}
 {% block title %} Inicio {% endblock %}
 {% block content %}
-<h1>BLOG DE LEIDY</h1>
-<p>Bienvenido a mi blog, ¡espero puedas encontrar lo que necesitas aquí!</p>
+<section class="welcome-section">
+
+    <div class="welcome-content">
+
+        <span class="welcome-tag">TU ESPACIO DIGITAL</span>
+
+        <h2>¡Bienvenido!</h2>
+
+        <p>
+            Descubre posts, comparte tus ideas
+            y conéctate con nuestra comunidad.
+        </p>
+
+        <a href="{% url 'lista_posts' %}"
+           class="welcome-button">
+            Explorar posts
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ESTADISTICAS DE GLUPS -->
+<section class="home-stats">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <span>▤</span>
+        </div>
+
+        <div class="stat-info">
+            <span class="stat-number">
+                {{ total_posts }}
+            </span>
+
+            <span class="stat-label">
+                Posts
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <span>♧</span>
+        </div>
+
+        <div class="stat-info">
+            <span class="stat-number">
+                {{ total_autores }}
+            </span>
+
+            <span class="stat-label">
+                Autores
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <span>♙</span>
+        </div>
+
+        <div class="stat-info">
+            <span class="stat-number">
+                {{ total_miembros }}
+            </span>
+
+            <span class="stat-label">
+                Miembros registrados
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ACCESOS RAPIDOS -->
+<section class="quick-access-section">
+
+    <div class="section-heading">
+        <div>
+            <h2>Explora</h2>
+            <p>Encuentra contenido y descubre nuestra comunidad.</p>
+        </div>
+    </div>
+
+    <div class="quick-access-grid">
+
+        <!-- Explorar publicaciones -->
+        <a href="{% url 'lista_posts' %}"
+           class="quick-access-card">
+
+            <div class="quick-access-icon">
+                <span>▤</span>
+            </div>
+
+            <h3>Posts</h3>
+
+            <p>
+                Explora ideas, experiencias y contenidos compartidos.
+            </p>
+
+            <span class="quick-access-link">
+                Explorar contenido →
+            </span>
+
+        </a>
+
+
+        <!-- Explorar autores -->
+        <a href="{% url 'lista_autores' %}"
+           class="quick-access-card">
+
+            <div class="quick-access-icon">
+                <span>♧</span>
+            </div>
+
+            <h3>Autores</h3>
+
+            <p>
+                Conoce a las personas que forman parte de nuestra comunidad.
+            </p>
+
+            <span class="quick-access-link">
+                Descubrir autores →
+            </span>
+
+        </a>
+
+
+        <!-- Crear post: solo usuarios autenticados -->
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'post_form' %}"
+               class="quick-access-card quick-access-highlight">
+
+                <div class="quick-access-icon">
+                    <span>＋</span>
+                </div>
+
+                <h3>Crear post</h3>
+
+                <p>
+                    Comparte tus ideas y suma contenido a la comunidad.
+                </p>
+
+                <span class="quick-access-link">
+                    Crear contenido →
+                </span>
+
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- Sección de publicaciones recientes -->
+<section class="recent-section">
+
+    <div class="section-heading">
+
+        <div>
+            <h2>Posts recientes</h2>
+            <p>Descubre los últimos contenidos compartidos.</p>
+        </div>
+
+        <a href="{% url 'lista_posts' %}"
+           class="view-all-link">
+            Ver todas →
+        </a>
+
+    </div>
+
+
+    <div class="recent-grid">
+
+        {% for post in posts_recientes %}
+
+            <a href="{% url 'detalle_post' post_id=post.id %}"
+               class="recent-card-link">
+
+                <article class="recent-card">
+
+                    {% if post.imagen %}
+                        <img src="{{ post.imagen.url }}"
+                             alt="{{ post.titulo }}"
+                             class="recent-card-imagen">
+                    {% endif %}
+
+                    <span class="recent-label">
+                        POST
+                    </span>
+
+                    <h3>{{ post.titulo }}</h3>
+
+                    <p>
+                        {{ post.contenido|truncatechars:120 }}
+                    </p>
+
+                    <div class="recent-meta">
+
+                        <span>{{ post.autor }}</span>
+
+                        <span>
+                            {{ post.fecha_creacion|date:"d/m/Y" }}
+                        </span>
+
+                    </div>
+
+                    <span class="card-read-more">
+                        Leer post →
+                    </span>
+
+                </article>
+
+            </a>
+
+        {% empty %}
+
+            <div class="empty-publications">
+
+                <h3>¡Todavía no hay posts!</h3>
+
+                <p>
+                    Cuando se compartan nuevos contenidos,
+                    aparecerán aquí.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- COMUNIDAD -->
+<section class="community-section">
+
+    <div class="section-heading">
+
+        <div>
+            <h2>Conoce nuestra comunidad</h2>
+            <p>Descubre quiénes comparten sus ideas.</p>
+        </div>
+
+        <a href="{% url 'lista_autores' %}"
+           class="view-all-link">
+            Ver todos →
+        </a>
+
+    </div>
+
+
+    <div class="community-grid">
+
+        {% for autor in autores_recientes %}
+
+            <a href="{% url 'perfil_autor' autor_id=autor.id %}"
+               class="community-card">
+
+                <img src="{{ autor.avatar_url }}"
+                    alt="Foto de {{ autor.nombre }} {{ autor.apellido }}"
+                    class="community-avatar">
+
+                <h3>{{ autor.nombre }} {{ autor.apellido }}</h3>
+
+                <span>Ver perfil →</span>
+
+            </a>
+
+        {% empty %}
+
+            <div class="empty-community">
+                <h3>¡Sé parte de nuestra comunidad!</h3>
+                <p>Los perfiles de los autores aparecerán aquí.</p>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- LLAMADA A LA ACCION -->
+<section class="home-cta">
+
+    <div class="home-cta-content">
+
+        {% if user.is_authenticated %}
+
+            <h2>¡Tus ideas también forman parte de nosotros!</h2>
+
+            <p>
+                Comparte tus conocimientos y sigue descubriendo
+                lo que nuestra comunidad tiene para ofrecer.
+            </p>
+
+            <a href="{% url 'post_form' %}"
+               class="cta-button">
+                Compartir una idea
+            </a>
+
+        {% else %}
+
+            <h2>¡Sumate a la comunidad!</h2>
+
+            <p>
+                Crea tu cuenta, comparte tus ideas y descubre
+                todo lo que nuestra comunidad tiene para ofrecer.
+            </p>
+
+            <a href="{% url 'registro' %}"
+               class="cta-button">
+                Crear mi cuenta
+            </a>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

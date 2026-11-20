@@ -6,7 +6,16 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Ingresar</button>
-</form>
-<p>¿Todavía no tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
+    <button type="submit" class="btn-filtrar">
+                Ingresar
+            </button>
+
+            <p class="auth-extra-link">
+                <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+            </p>
+
+            <p class="auth-register-link">
+                ¿Todavía no tienes cuenta?
+                <a href="{% url 'registro' %}">Regístrate aquí</a>
+            </p>
 {% endblock %}

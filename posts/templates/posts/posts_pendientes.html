@@ -1,0 +1,113 @@
+{% extends "posts/base.html" %}
+{% block title %}
+Posts pendientes
+{% endblock %}
+{% block content %}
+
+<div class="panel-moderacion">
+
+    <div class="panel-header">
+
+        <h1>Panel de moderación</h1>
+
+        <p>Revisa las publicaciones enviadas por los autores antes de que aparezcan en el blog.</p>
+
+        <span class="pendientes-contador">
+            {{ posts|length }} posts pendientes
+        </span>
+
+    </div>
+
+    {% for post in posts %}
+
+        <article class="publicacion-pendiente publicacion-detalle">
+
+            <div class="publicacion-top">
+
+                <span class="estado-pendiente">
+                    Pendiente de revisión
+                </span>
+
+                <h2>{{ post.titulo }}</h2>
+
+            </div>
+
+            {% if post.imagen %}
+                <img src="{{ post.imagen.url }}"
+                     alt="{{ post.titulo }}"
+                     class="publicacion-imagen">
+            {% endif %}
+
+            <p class="publicacion-descripcion detalle-descripcion">
+                {{ post.contenido }}
+            </p>
+
+            <div class="publicacion-meta">
+                <span class="publicacion-autor">
+                    Publicado por: <strong>{{ post.autor.username }}</strong>
+                </span>
+                <span class="publicacion-fecha">
+                    {{ post.fecha_creacion|date:"d/m/Y H:i" }}
+                </span>
+            </div>
+
+            <div class="acciones-moderacion">
+
+                <form method="POST"
+                      action="{% url 'revisar_post' post.id %}"
+                      class="form-moderacion">
+                      
+                    <div class="acciones-moderacion">
+
+                <form method="POST"
+                      action="{% url 'revisar_post' post.id %}"
+                      class="form-moderacion">
+                    {% csrf_token %}
+
+                    <div class="motivo-rechazo-grupo">
+                        <label for="motivo-{{ post.id }}">
+                            Comentario / motivo (opcional si rechazas):
+                        </label>
+                        <textarea id="motivo-{{ post.id }}"
+                                  name="motivo_rechazo"
+                                  rows="2"
+                                  class="motivo-rechazo-input"
+                                  placeholder="Indica por qué se rechaza la publicación..."></textarea>
+                    </div>
+
+                    <div class="botones-moderacion">
+                        <button type="submit"
+                                name="accion"
+                                value="aprobar"
+                                class="btn-aprobar">
+                            ✓ Aprobar publicación
+                        </button>
+
+                        <button type="submit"
+                                name="accion"
+                                value="rechazar"
+                                class="btn-rechazar">
+                            ✕ Rechazar publicación
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+            </div>
+
+        </article>
+
+    {% empty %}
+
+        <div class="panel-vacio">
+            <h3>¡Todo al día!</h3>
+            <p>No hay publicaciones pendientes de aprobación.</p>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
